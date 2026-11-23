@@ -1,0 +1,5 @@
+---
+kubernetes_minor: "v1.37"
+pod_cidr: "10.244.0.0/16"
+cri_socket: "unix:///run/containerd/containerd.sock"
+flannel_version: "v0.27.4"

@@ -1,0 +1,12 @@
+---
+- name: Wait for the control-plane API
+  ansible.builtin.wait_for:
+    host: "{{ hostvars[groups['k8s_control_plane'][0]].ansible_host }}"
+    port: 6443
+    timeout: 180
+
+- name: Join the cluster once
+  ansible.builtin.command:
+    cmd: "{{ hostvars[groups['k8s_control_plane'][0]].kubeadm_join_command }}"
+    creates: /etc/kubernetes/kubelet.conf
+  no_log: true

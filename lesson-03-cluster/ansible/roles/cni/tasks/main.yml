@@ -1,0 +1,34 @@
+---
+- name: Download the pinned Flannel manifest
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/flannel-io/flannel/{{ flannel_version }}/Documentation/kube-flannel.yml"
+    dest: /etc/kubernetes/kube-flannel.yml
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Match Flannel network to kubeadm Pod CIDR
+  ansible.builtin.replace:
+    path: /etc/kubernetes/kube-flannel.yml
+    regexp: '10\.244\.0\.0/16'
+    replace: "{{ pod_cidr }}"
+
+- name: Verify the Flannel manifest contains the configured Pod CIDR
+  ansible.builtin.command:
+    argv:
+      - grep
+      - -Fq
+      - "{{ pod_cidr }}"
+      - /etc/kubernetes/kube-flannel.yml
+  changed_when: false
+
+- name: Apply the Flannel CNI manifest
+  ansible.builtin.command:
+    argv:
+      - kubectl
+      - --kubeconfig=/etc/kubernetes/admin.conf
+      - apply
+      - -f
+      - /etc/kubernetes/kube-flannel.yml
+  register: flannel_apply
+  changed_when: "'created' in flannel_apply.stdout or 'configured' in flannel_apply.stdout"

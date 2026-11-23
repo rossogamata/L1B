@@ -147,7 +147,7 @@ kubectl delete -f pod.yaml
 | `CrashLoopBackOff` | `logs --previous`, команду запуску, конфігурацію та probes |
 | `Running`, але не Ready | Readiness probe та її події |
 
-## Демонстрація викладача
+## Моя демонстрація
 
 1. Застосувати маніфест `web-demo` і показати його розміщення.
 2. Пояснити кожне поле YAML, зіставляючи його з таблицею.

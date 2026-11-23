@@ -1,0 +1,6 @@
+---
+- name: Apply kernel sysctls
+  ansible.builtin.command:
+    argv:
+      - sysctl
+      - --system

@@ -1,0 +1,32 @@
+proxmox_endpoint       = "https://<PVE-HOST>:8006/"
+pve_node_name          = "<PVE-NODE-NAME>"
+cloud_init_template_id = 9000
+bridge                 = "vmbr0"
+gateway                = "192.0.2.1"
+dns_servers            = ["192.0.2.53"]
+ipv4_prefix            = 24
+control_plane_name     = "l1b-cp1"
+
+ssh_public_key_path  = "~/.ssh/id_ed25519.pub"
+ssh_private_key_path = "~/.ssh/id_ed25519"
+
+nodes = {
+  "l1b-cp1" = {
+    vm_id     = 9101
+    ipv4      = "192.0.2.10"
+    vcpu      = 2
+    memory_mb = 4096
+  }
+  "l1b-worker1" = {
+    vm_id     = 9102
+    ipv4      = "192.0.2.11"
+    vcpu      = 2
+    memory_mb = 3072
+  }
+  "l1b-worker2" = {
+    vm_id     = 9103
+    ipv4      = "192.0.2.12"
+    vcpu      = 2
+    memory_mb = 3072
+  }
+}

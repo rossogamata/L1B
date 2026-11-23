@@ -1,0 +1,19 @@
+---
+all:
+  children:
+    k8s_cluster:
+      children:
+        k8s_control_plane:
+          hosts:
+            l1b-cp1:
+              ansible_host: 192.0.2.10
+        k8s_workers:
+          hosts:
+            l1b-worker1:
+              ansible_host: 192.0.2.11
+            l1b-worker2:
+              ansible_host: 192.0.2.12
+      vars:
+        ansible_user: ubuntu
+        ansible_ssh_private_key_file: /path/to/l1b_ed25519
+        ansible_become: true
